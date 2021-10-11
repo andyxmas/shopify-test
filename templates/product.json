@@ -1,5 +1,8 @@
 {
   "sections": {
+    "hero": {
+      "type": "hero"
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -56,6 +59,7 @@
     }
   },
   "order": [
+    "hero",
     "main",
     "product-recommendations"
   ]

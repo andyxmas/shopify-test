@@ -1337,6 +1337,14 @@
         }
       }
     },
+    "hero": {
+      "name": "Hero",
+      "blocks": {
+        "banner_image": {
+          "name": "Banner Image"
+        }
+      }
+    },
     "main-product": {
       "name": "Product information",
       "blocks": {
