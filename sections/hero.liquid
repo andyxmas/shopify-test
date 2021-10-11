@@ -1,4 +1,7 @@
-<div>Hero!</div>
+
+{% if section.blocks[0].settings.banner_image_file %}
+    <img src="{{ section.blocks[0].settings.banner_image_file | img_url }}" alt="" />
+{% endif %}
 
 {% schema %}
 
