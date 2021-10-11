@@ -1,0 +1,30 @@
+<div>Hero!</div>
+
+{% schema %}
+
+{
+  "name": "Hero",
+  "max_blocks": 1,
+  "blocks": [
+    {
+        "type": "banner_image",
+        "name": "Banner Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "banner_image_file",
+            "label": "Select an image",
+            "info": "Optionally select an image to be displayed as a banner. This will show on the top of the product page, and also in the cart."
+          }
+        ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "banner_image"
+      }
+    ]
+  }
+}
+{% endschema %}
