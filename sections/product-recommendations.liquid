@@ -8,18 +8,20 @@
 <noscript>{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'section-product-recommendations.css' | asset_url | stylesheet_tag }}</noscript>
 
-<h2>x</h2>
-{% assign manual_reccomendations = false %}
+
+{% comment %} {% assign manual_reccomendations = section.blocks[0].settings.product %} {% endcomment %}
+{% comment %} truthy if 1+ manual reccomndation metafields are  set  {% endcomment %}
+{% assign manual_reccomendations_count = 0 %}
 {% for block in section.blocks %}
   {% if block.settings.product %}
-    {% assign manual_reccomendations = true %}
+    {% assign manual_reccomendations_count = manual_reccomendations_count | plus: 1 %}
   {% endif %}
 {% endfor %}
 
-{% if manual_reccomendations %}
+{% if manual_reccomendations_count > 0 %}
   <div class="product-recommendations page-width">
     <h2 class="product-recommendations__heading">{{ section.settings.heading | escape }}</h2>
-    <ul class="grid grid--2-col product-grid{% if recommendations.products_count > 3 %} grid--4-col-desktop grid--quarter-max{% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %}" role="list">
+    <ul class="grid grid--2-col product-grid{% if manual_reccomendations_count > 3 %} grid--4-col-desktop grid--quarter-max{% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %}" role="list">
     {% for block in section.blocks %}
       {% if block.settings.product %}
         <li class="grid__item">
