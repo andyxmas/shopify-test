@@ -8,14 +8,23 @@
 <noscript>{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'section-product-recommendations.css' | asset_url | stylesheet_tag }}</noscript>
 
-<product-recommendations class="product-recommendations page-width" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
-  {% if recommendations.performed and recommendations.products_count > 0 %}
+<h2>x</h2>
+{% assign manual_reccomendations = false %}
+{% for block in section.blocks %}
+  {% if block.settings.product %}
+    {% assign manual_reccomendations = true %}
+  {% endif %}
+{% endfor %}
+
+{% if manual_reccomendations %}
+  <div class="product-recommendations page-width">
     <h2 class="product-recommendations__heading">{{ section.settings.heading | escape }}</h2>
     <ul class="grid grid--2-col product-grid{% if recommendations.products_count > 3 %} grid--4-col-desktop grid--quarter-max{% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %}" role="list">
-      {% for recommendation in recommendations.products %}
+    {% for block in section.blocks %}
+      {% if block.settings.product %}
         <li class="grid__item">
-          {% render 'product-card',
-            product_card_product: recommendation,
+          {% render 'product-card', 
+            product_card_product: block.settings.product,
             media_size: section.settings.image_ratio,
             show_secondary_image: section.settings.show_secondary_image,
             add_image_padding: section.settings.add_image_padding,
@@ -24,10 +33,33 @@
             show_rating: section.settings.show_rating
           %}
         </li>
-      {% endfor %}
+      {% endif %}
+    {% endfor %}
     </ul>
-  {% endif %}
-</product-recommendations>
+  </div>
+
+{% else %}
+  <product-recommendations class="product-recommendations page-width" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      <h2 class="product-recommendations__heading">{{ section.settings.heading | escape }}</h2>
+      <ul class="grid grid--2-col product-grid{% if recommendations.products_count > 3 %} grid--4-col-desktop grid--quarter-max{% else %} grid--{{ recommendations.products_count }}-col-tablet{% endif %}" role="list">
+        {% for recommendation in recommendations.products %}
+          <li class="grid__item">
+            {% render 'product-card',
+              product_card_product: recommendation,
+              media_size: section.settings.image_ratio,
+              show_secondary_image: section.settings.show_secondary_image,
+              add_image_padding: section.settings.add_image_padding,
+              show_vendor: section.settings.show_vendor,
+              show_image_outline: section.settings.show_image_outline,
+              show_rating: section.settings.show_rating
+            %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </product-recommendations>
+{% endif %}
 
 {% javascript %}
   class ProductRecommendations extends HTMLElement {
@@ -65,6 +97,20 @@
   "name": "t:sections.product-recommendations.name",
   "tag": "section",
   "class": "spaced-section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "name": "Recommeded Product",
+      "type": "reccomended_product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
   "settings": [
     {
       "type": "paragraph",
