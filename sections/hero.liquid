@@ -1,33 +1,19 @@
 
-{% if section.blocks[0].settings.banner_image_file %}
-    <img src="{{ section.blocks[0].settings.banner_image_file | img_url }}" alt="" />
+{% if section.settings.banner_image_file %}
+    <img style="max-width: 100%; margin: 0 auto;" src="{{ section.settings.banner_image_file | img_url: '1600x300', crop: 'center', format: 'pjpg' }}" alt="" />
 {% endif %}
 
 {% schema %}
 
 {
   "name": "Hero",
-  "max_blocks": 1,
-  "blocks": [
+  "settings": [
     {
-        "type": "banner_image",
-        "name": "Banner Image",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "banner_image_file",
-            "label": "Select an image",
-            "info": "Optionally select an image to be displayed as a banner. This will show on the top of the product page, and also in the cart."
-          }
-        ]
+      "type": "image_picker",
+      "id": "banner_image_file",
+      "label": "Select an image",
+      "info": "Optionally select an image to be displayed as a banner. This will show on the top of the product page, and also in the cart."
     }
-  ],
-  "default": {
-    "blocks": [
-      {
-        "type": "banner_image"
-      }
-    ]
-  }
+  ]
 }
 {% endschema %}
