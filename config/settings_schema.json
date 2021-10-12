@@ -348,5 +348,15 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "t:settings_schema.developer_settings.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "dev_api_key",
+        "label": "t:settings_schema.developer_settings.settings.api_key"
+      }
+    ]
   }
 ]

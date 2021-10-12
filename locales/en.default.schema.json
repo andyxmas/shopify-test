@@ -202,6 +202,12 @@
         }
       }
     },
+    "developer_settings": {
+      "name": "Developer Settings",
+      "settings": {
+        "api_key": "API Key"
+      }
+    },
     "layout": {
       "name": "Layout",
       "settings": {
