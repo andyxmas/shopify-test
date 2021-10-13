@@ -46,8 +46,19 @@
                 <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media">
                     {% if item.product.metafields.my_fields.banner_image %}
-                      <img src="{{ item.product.metafields.my_fields.banner_image | img_url: '160x30', crop: 'center', format: 'pjpg' }}" alt="" />
+                      <img width="160" height="30" loading="lazy" src="{{ item.product.metafields.my_fields.banner_image | img_url: '160x30', crop: 'center', format: 'pjpg' }}" alt="" />
                     {% endif %}
+
+                    {% unless item.properties == empty %}
+                      <ul>
+                        
+                      {% for property in item.properties %}
+                          
+                      <li>{{ property.first }}: {{ property.last }}</li>
+                        
+                      {% endfor %}
+                      </ul>
+                      {% endunless %}
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
                       <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>

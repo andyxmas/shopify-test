@@ -197,6 +197,7 @@
             </share-button>
             <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
           {%- when 'variant_picker' -%}
+
             {%- unless product.has_only_default_variant -%}
               {%- if block.settings.picker_type == 'button' -%}
                 <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
@@ -287,6 +288,15 @@
 
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
+
+                  {% comment %} {% if product.selected_variant.metafields.my_fields.example %}
+                    <input type="text" id="test_data" name="properties[test_data]" value="{{ product.selected_variant.metafields.my_fields.example }}">
+                  {% endif %} {% endcomment %}
+
+                  {% if product.variants[0].metafields.my_fields.example %}
+                    <input type="hidden" id="test_data" name="properties[test_data]" value="{{ product.variants[0].metafields.my_fields.example }}">
+                  {% endif %}
+
                   <div class="product-form__buttons">
                     <button
                       type="submit"
